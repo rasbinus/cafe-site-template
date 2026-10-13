@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kopi Senja</title>
+  <meta name="description" content="">
+
+  <!-- =====================================================================
+       STEP 1: EDIT THE SHOP DETAILS HERE (only this block per client)
+       Everything on the page is filled in from this CONFIG object.
+       Sample data below is a FICTIONAL café, not a real business.
+       ===================================================================== -->
+  <script>
+    const CONFIG = {
+      name: "Kopi Senja",
+      tagline: "Small-batch coffee & fresh pastries",
+      description: "A cozy corner café serving locally roasted coffee, homemade pastries and light lunches. Come for the coffee, stay for the quiet afternoons.",
+
+      // Hero image: a URL or a file path like "images/hero.jpg". Leave "" for a plain color.
+      heroImage: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200&q=70",
+      // Logo: file path like "images/logo.png". Leave "" to show the name as text only.
+      logo: "",
+
+      // WhatsApp: number in international format, digits only (no +, spaces or dashes)
+      whatsapp: {
+        number: "6281234567890",
+        message: "Hi Kopi Senja! I'd like to ask about..."
+      },
+
+      address: "Jl. Contoh No. 12, Kota Contoh",
+      // Paste a Google Maps share link (Share > Copy link) for the button:
+      mapsLink: "https://www.google.com/maps/search/?api=1&query=Jl.+Contoh+No.+12",
+      // Optional embedded map: Google Maps > Share > Embed a map > copy the src="..." URL. "" to hide.
+      mapsEmbed: "",
+
+      // Opening hours: one row per line. Use "Closed" for days off.
+      hours: [
+        ["Monday – Friday", "07:00 – 21:00"],
+        ["Saturday",        "08:00 – 22:00"],
+        ["Sunday",          "08:00 – 18:00"]
+      ],
+
+      // Menu: add, remove or rename categories and items freely. Prices are plain text.
+      menu: [
+        { category: "Coffee", items: [
+          { name: "Espresso",     price: "18k", note: "Double shot" },
+          { name: "Es Kopi Susu", price: "22k", note: "Our signature palm-sugar latte" },
+          { name: "Cappuccino",   price: "25k" },
+          { name: "V60 Pour Over", price: "28k", note: "Single origin, ask for today's beans" }
+        ]},
+        { category: "Not Coffee", items: [
+          { name: "Matcha Latte", price: "26k" },
+          { name: "Hot Chocolate", price: "24k" },
+          { name: "Lemon Tea",    price: "15k" }
+        ]},
+        { category: "Bites", items: [
+          { name: "Butter Croissant", price: "20k" },
+          { name: "Banana Bread",     price: "18k", note: "Baked daily" },
+          { name: "Chicken Sandwich", price: "35k" }
+        ]}
+      ],
+
+      footer: "© Kopi Senja. All rights reserved."
+    };
+  </script>
+
+  <!-- ===================== STYLES (colors are easy to retheme) ===================== -->
+  <style>
+    :root {
+      --bg: #faf6f1;        /* page background */
+      --text: #2b2118;      /* main text */
+      --muted: #7a6a5c;     /* secondary text */
+      --accent: #8a5a2b;    /* brand color: headings, hero overlay */
+      --card: #ffffff;      /* card background */
+      --wa: #25d366;        /* WhatsApp green */
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.6;
+    }
+    img, iframe { max-width: 100%; }
+    section { max-width: 720px; margin: 0 auto; padding: 40px 20px; }
+    h2 { color: var(--accent); font-size: 1.5rem; margin-bottom: 16px; }
+
+    /* Hero */
+    .hero {
+      background: var(--accent) center / cover no-repeat;
+      color: #fff; text-align: center;
+      padding: 80px 20px;
+      position: relative;
+    }
+    .hero::before { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,.45); }
+    .hero > * { position: relative; }
+    .hero img { height: 80px; margin-bottom: 12px; border-radius: 50%; }
+    .hero h1 { font-size: 2.4rem; }
+    .hero p { margin-top: 8px; font-size: 1.1rem; }
+
+    /* Buttons */
+    .btn {
+      display: inline-block; padding: 12px 24px; border-radius: 999px;
+      text-decoration: none; font-weight: 600; color: #fff; background: var(--accent);
+    }
+    .btn.wa { background: var(--wa); }
+    .hero .btn { margin-top: 20px; }
+
+    /* Hours */
+    .hours { background: var(--card); border-radius: 12px; padding: 8px 16px; }
+    .hours div { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; }
+    .hours div:last-child { border-bottom: 0; }
+
+    /* Menu */
+    .menu-cat { margin-bottom: 24px; }
+    .menu-cat h3 { margin-bottom: 8px; border-bottom: 2px solid var(--accent); display: inline-block; }
+    .item { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; }
+    .item small { display: block; color: var(--muted); }
+    .item .price { font-weight: 600; white-space: nowrap; }
+
+    /* Location */
+    iframe { width: 100%; height: 260px; border: 0; border-radius: 12px; margin: 12px 0; }
+    .loc .btn { margin-top: 8px; }
+
+    footer { text-align: center; color: var(--muted); padding: 24px 20px 90px; font-size: .9rem; }
+
+    /* Floating WhatsApp button, always visible on mobile */
+    .wa-float {
+      position: fixed; right: 16px; bottom: 16px; z-index: 10;
+      box-shadow: 0 4px 12px rgba(0,0,0,.25);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ===================== PAGE STRUCTURE (content is filled in by the script below) ===================== -->
+  <header class="hero" id="hero">
+    <img id="logo" alt="" hidden>
+    <h1 id="name"></h1>
+    <p id="tagline"></p>
+    <a class="btn wa" id="wa-hero">Chat on WhatsApp</a>
+  </header>
+
+  <section>
+    <h2>About us</h2>
+    <p id="description"></p>
+  </section>
+
+  <section>
+    <h2>Opening hours</h2>
+    <div class="hours" id="hours"></div>
+  </section>
+
+  <section>
+    <h2>Menu</h2>
+    <div id="menu"></div>
+  </section>
+
+  <section class="loc">
+    <h2>Find us</h2>
+    <p id="address"></p>
+    <div id="map"></div>
+    <a class="btn" id="maps-link" target="_blank" rel="noopener">Open in Google Maps</a>
+  </section>
+
+  <footer id="footer"></footer>
+
+  <a class="btn wa wa-float" id="wa-float">WhatsApp</a>
+
+  <!-- ===================== FILL THE PAGE FROM CONFIG (no need to edit) ===================== -->
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const c = CONFIG;
+
+    // Use textContent everywhere so client text can't break the HTML
+    document.title = c.name + " – " + c.tagline;
+    document.querySelector('meta[name="description"]').content = c.description;
+    $("name").textContent = c.name;
+    $("tagline").textContent = c.tagline;
+    $("description").textContent = c.description;
+    $("address").textContent = c.address;
+    $("footer").textContent = c.footer;
+
+    if (c.heroImage) $("hero").style.backgroundImage = `url("${c.heroImage}")`;
+    if (c.logo) { $("logo").src = c.logo; $("logo").alt = c.name + " logo"; $("logo").hidden = false; }
+
+    // WhatsApp link: https://wa.me/<number>?text=<encoded message>
+    const waUrl = `https://wa.me/${c.whatsapp.number}?text=${encodeURIComponent(c.whatsapp.message)}`;
+    ["wa-hero", "wa-float"].forEach((id) => {
+      $(id).href = waUrl; $(id).target = "_blank"; $(id).rel = "noopener";
+    });
+
+    $("maps-link").href = c.mapsLink;
+    if (c.mapsEmbed) {
+      const f = document.createElement("iframe");
+      f.src = c.mapsEmbed; f.loading = "lazy"; f.title = "Map";
+      $("map").appendChild(f);
+    }
+
+    // Opening hours
+    c.hours.forEach(([day, time]) => {
+      const row = document.createElement("div");
+      row.innerHTML = "<span></span><strong></strong>";
+      row.children[0].textContent = day;
+      row.children[1].textContent = time;
+      $("hours").appendChild(row);
+    });
+
+    // Menu
+    c.menu.forEach((cat) => {
+      const box = document.createElement("div");
+      box.className = "menu-cat";
+      const h = document.createElement("h3");
+      h.textContent = cat.category;
+      box.appendChild(h);
+      cat.items.forEach((it) => {
+        const row = document.createElement("div");
+        row.className = "item";
+        row.innerHTML = "<div><span></span><small></small></div><span class='price'></span>";
+        row.querySelector("span").textContent = it.name;
+        row.querySelector("small").textContent = it.note || "";
+        row.querySelector("small").hidden = !it.note;
+        row.querySelector(".price").textContent = it.price;
+        box.appendChild(row);
+      });
+      $("menu").appendChild(box);
+    });
+  </script>
+</body>
+</html>
