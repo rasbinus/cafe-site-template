@@ -6,6 +6,8 @@ A one-page website template for local shops and cafés. Plain HTML/CSS/JS, no bu
 
 The demo uses a fictional café ("Kopi Senja"), not a real business.
 
+<img src="images/screenshot.png" alt="Screenshot of the café template on mobile" width="320">
+
 ## Features
 
 - Mobile-first, single `index.html` file
